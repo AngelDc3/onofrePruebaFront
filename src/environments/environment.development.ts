@@ -1,5 +1,5 @@
 export const environment = {
-  apiURL: 'https://fakestoreapi.com',
+  apiURL: 'http://localhost:3010',
   stripeAPIKey: '',
   serverURL: 'http://localhost:4242',
 };

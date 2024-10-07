@@ -13,3 +13,34 @@
 .show-cart-animation {
   animation: slideDown 0.5s ease-in-out forwards;
 }
+
+.login {
+
+  position: relative;
+  display: inline-block;
+}
+
+.login-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.login-content p:hover {
+  background-color: #f1f1f1;
+}
+
+.login-content p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Mostrar el menú cuando el usuario pone el cursor sobre el botón */
+.login:hover .login-content {
+  display: block;
+}

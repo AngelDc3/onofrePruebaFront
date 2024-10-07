@@ -6,11 +6,12 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { Articulo } from '@shared/models/articulo.interface';
 import { Product } from '@shared/models/product.interface';
 import { ToastrService } from 'ngx-toastr';
 
 export interface CartStore {
-  products: Product[];
+  products: Articulo[];
   totalAmount: number;
   productsCount: number;
 }
@@ -29,14 +30,14 @@ export const CartStore = signalStore(
     totalAmount: computed(() => calculateTotalAmount(products())),
   })),
   withMethods(({ products, ...store }, toastSvc = inject(ToastrService)) => ({
-    addToCart(product: Product) {
+    addToCart(product: Articulo) {
       const isProductInCart = products().find(
-        (item: Product) => item.id === product.id
+        (item: Articulo) => item.idarticulo === product.idarticulo
       );
 
       if (isProductInCart) {
-        isProductInCart.qty++;
-        isProductInCart.subTotal = isProductInCart.qty * isProductInCart.price;
+        isProductInCart.cantidad++;
+        isProductInCart.subtotal = isProductInCart.cantidad * isProductInCart.precio;
         patchState(store, { products: [...products()] });
       } else {
         patchState(store, { products: [...products(), product] });
@@ -44,7 +45,7 @@ export const CartStore = signalStore(
       toastSvc.success('Product added', 'DOMINI STORE');
     },
     removeFromCart(id: number) {
-      const updatedProducts = products().filter((product) => product.id !== id);
+      const updatedProducts = products().filter((product) => product.idarticulo !== id);
       patchState(store, { products: updatedProducts });
       toastSvc.info('Product removed', 'DOMINI STORE');
     },
@@ -55,13 +56,13 @@ export const CartStore = signalStore(
   }))
 );
 
-function calculateTotalAmount(products: Product[]): number {
+function calculateTotalAmount(products: Articulo[]): number {
   return products.reduce(
-    (acc, product) => acc + product.price * product.qty,
+    (acc, product) => acc + product.precio * product.cantidad,
     0
   );
 }
 
-function calculateProductCount(products: Product[]): number {
-  return products.reduce((acc, product) => acc + product.qty, 0);
+function calculateProductCount(products: Articulo[]): number {
+  return products.reduce((acc, product) => acc + product.cantidad, 0);
 }

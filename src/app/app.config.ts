@@ -10,6 +10,7 @@ import { ErrorResponseInterceptor } from '@shared/interceptors/error-response.in
 import { SpinnerInterceptor } from '@shared/interceptors/spinner.interceptor';
 import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
+import { jwtInterceptorInterceptor, } from './jwt-interceptor.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(
       withFetch(),
-      withInterceptors([ErrorResponseInterceptor, SpinnerInterceptor])
+      withInterceptors([ErrorResponseInterceptor, SpinnerInterceptor, jwtInterceptorInterceptor])
     ),
   ],
 };
